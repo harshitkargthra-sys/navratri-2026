@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Navratri 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#060B13',
+                        gold: '#FFD700',
+                        pink: '#D81B60',
+                        orange: '#FA7F22',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background: #060B13; color: white; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .stat-card { transition: all 0.3s ease; }
+        .stat-card:hover { transform: translateY(-5px); border-color: #FA7F22; }
+        .tab-btn.active { background: #FA7F22; color: white; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- LOGIN OVERLAY -->
+    <div id="loginOverlay" class="fixed inset-0 z-50 bg-navy flex items-center justify-center p-6">
+        <div class="glass p-10 rounded-[32px] w-full max-w-md text-center">
+            <h1 class="text-3xl font-black mb-8">Admin Login</h1>
+            <input type="password" id="adminPass" placeholder="Enter Password" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-orange mb-6 text-center text-2xl tracking-widest">
+            <button onclick="checkLogin()" class="w-full bg-orange py-5 rounded-2xl font-black uppercase text-xl hover:bg-white hover:text-navy transition">Unlock Dashboard</button>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD -->
+    <div id="dashboard" class="hidden">
+        <nav class="border-b border-white/10 p-6 flex justify-between items-center glass sticky top-0 z-40">
+            <h2 class="font-black text-xl tracking-tighter">CMD CENTER <span class="text-orange">2026</span></h2>
+            <button onclick="logout()" class="text-xs uppercase font-bold text-gray-400 hover:text-white">Logout</button>
+        </nav>
+
+        <main class="max-w-7xl mx-auto p-6 space-y-10">
+            
+            <!-- STATS BLOCKS -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass p-6 rounded-3xl text-center stat-card border-b-4 border-white/10">
+                    <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Total Entries</p>
+                    <h3 id="statTotal" class="text-4xl font-black">0</h3>
+                </div>
+                <div class="glass p-6 rounded-3xl text-center stat-card border-b-4 border-orange">
+                    <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Pending</p>
+                    <h3 id="statPending" class="text-4xl font-black text-orange">0</h3>
+                </div>
+                <div class="glass p-6 rounded-3xl text-center stat-card border-b-4 border-green-500">
+                    <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Ready to Print</p>
+                    <h3 id="statReady" class="text-4xl font-black text-green-500">0</h3>
+                </div>
+                <div class="glass p-6 rounded-3xl text-center stat-card border-b-4 border-pink">
+                    <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Total Success</p>
+                    <h3 id="statSuccess" class="text-4xl font-black text-pink">0</h3>
+                </div>
+            </div>
+
+            <!-- SEARCH & FILTERS -->
+            <div class="glass p-6 rounded-[32px] flex flex-col md:flex-row gap-4 mb-10">
+                <div class="flex-1 relative">
+                    <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Search by Name, Pass No or Phone..." class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-orange font-bold pl-14">
+                    <svg class="w-6 h-6 absolute left-5 top-1/2 -translate-y-1/2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <button onclick="refreshData()" class="bg-white/5 hover:bg-white/10 px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    Refresh
+                </button>
+            </div>
+
+            <!-- DATA TABLE / LIST -->
+            <div id="contestantList" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards injected here -->
+                <div class="col-span-full py-20 text-center opacity-50 italic">Loading database...</div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- UPDATE MODAL -->
+    <div id="updateModal" class="fixed inset-0 z-50 bg-black/80 hidden items-center justify-center p-6 backdrop-blur-sm">
+        <div class="glass p-8 rounded-[32px] w-full max-w-md space-y-6">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xl font-bold">Update Participant</h3>
+                <button onclick="closeUpdate()" class="text-gray-500 hover:text-white">✕</button>
+            </div>
+            
+            <div class="space-y-4">
+                <p id="targetName" class="text-orange font-bold uppercase tracking-widest text-sm"></p>
+                
+                <div>
+                    <label class="block text-[10px] uppercase font-bold text-gray-500 mb-2">Change Status</label>
+                    <select id="newStatus" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-orange">
+                        <option value="Pending Verification">Pending</option>
+                        <option value="Verified">Verified (Ready to Print)</option>
+                        <option value="Printed">Printed (Success)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] uppercase font-bold text-gray-500 mb-2">Assign Pass Number</label>
+                    <input type="text" id="newPassNo" placeholder="Enter number e.g. 501" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl outline-none focus:border-orange">
+                </div>
+            </div>
+
+            <button onclick="submitUpdate()" id="saveBtn" class="w-full bg-orange py-4 rounded-xl font-black uppercase hover:bg-white hover:text-navy transition">Apply Changes</button>
+        </div>
+    </div>
+
+    <script>
+        const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbwvFhjxKiqAJISgnHRVslkJrMM8cBlRFx7GOYxPEHHlzEsuRdJjbgI2dMwPiB07MzISVg/exec";
+        let masterData = [];
+        let currentPass = "";
+        let targetPhone = "";
+
+        // Login Logic
+        function checkLogin() {
+            const pass = document.getElementById('adminPass').value;
+            if (pass) {
+                currentPass = pass;
+                localStorage.setItem('adminKey', pass);
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('dashboard').classList.remove('hidden');
+                refreshData();
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('adminKey');
+            location.reload();
+        }
+
+        // Initialize from storage
+        window.onload = () => {
+            const saved = localStorage.getItem('adminKey');
+            if (saved) {
+                document.getElementById('adminPass').value = saved;
+                checkLogin();
+            }
+        }
+
+        async function refreshData() {
+            const list = document.getElementById('contestantList');
+            list.innerHTML = '<div class="col-span-full py-20 text-center opacity-50 italic animate-pulse">Synchronizing with Google Sheet...</div>';
+            
+            try {
+                const res = await fetch(GOOGLE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({ action: "get_data", password: currentPass })
+                });
+                const json = await res.json();
+                if (json.result === "success") {
+                    masterData = json.data;
+                    updateStats();
+                    renderList(masterData);
+                } else {
+                    alert("Unauthorized. Correct password required.");
+                    logout();
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Failed to fetch data. Check your internet.");
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('statTotal').innerText = masterData.length;
+            document.getElementById('statPending').innerText = masterData.filter(r => r.status === "Pending Verification").length;
+            document.getElementById('statReady').innerText = masterData.filter(r => r.status === "Verified").length;
+            document.getElementById('statSuccess').innerText = masterData.filter(r => r.status === "Printed").length;
+        }
+
+        function renderList(rows) {
+            const list = document.getElementById('contestantList');
+            list.innerHTML = rows.length === 0 ? '<div class="col-span-full py-20 text-center">No matching entries found.</div>' : '';
+            
+            rows.forEach(r => {
+                const card = document.createElement('div');
+                card.className = "glass p-6 rounded-3xl space-y-4 hover:border-orange transition border border-transparent";
+                
+                let statusColor = "text-orange";
+                if (r.status === "Verified") statusColor = "text-green-500";
+                if (r.status === "Printed") statusColor = "text-pink";
+
+                const photoUrl = r.photo_link || "https://placehold.co/200x200?text=No+Photo";
+                const cleanPhoto = photoUrl.includes('id=') ? `https://drive.google.com/thumbnail?id=${photoUrl.split('id=')[1].split('&')[0]}&sz=w400` : photoUrl;
+
+                card.innerHTML = `
+                    <div class="flex gap-4">
+                        <img src="${cleanPhoto}" class="w-16 h-16 rounded-xl object-cover bg-white/10">
+                        <div>
+                            <h4 class="font-black">${r.full_name}</h4>
+                            <p class="text-[10px] uppercase text-gray-400 font-bold">${r.phone || 'No Phone'}</p>
+                            <p class="text-[10px] ${statusColor} font-black mt-1">${r.status.toUpperCase()}</p>
+                        </div>
+                    </div>
+                    <div class="bg-black/20 p-4 rounded-2xl flex justify-between items-center text-xs">
+                        <div>
+                            <p class="text-[8px] text-gray-500 uppercase font-black">Pass NO.</p>
+                            <p class="font-bold text-lg">${r.pass_no || '-'}</p>
+                        </div>
+                        <button onclick="openUpdate('${r.phone}', '${r.full_name}', '${r.status}', '${r.pass_no}')" class="bg-orange px-4 py-2 rounded-xl font-bold uppercase text-[10px] hover:invert transition">Manage</button>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function handleSearch() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = masterData.filter(r => 
+                (r.full_name && r.full_name.toLowerCase().includes(q)) || 
+                (r.phone && r.phone.includes(q)) || 
+                (r.pass_no && r.pass_no.includes(q))
+            );
+            renderList(filtered);
+        }
+
+        function openUpdate(phone, name, status, passNo) {
+            targetPhone = phone;
+            document.getElementById('targetName').innerText = name;
+            document.getElementById('newStatus').value = status;
+            document.getElementById('newPassNo').value = passNo === '-' ? '' : passNo;
+            document.getElementById('updateModal').classList.remove('hidden');
+            document.getElementById('updateModal').classList.add('flex');
+        }
+
+        function closeUpdate() {
+            document.getElementById('updateModal').classList.add('hidden');
+            document.getElementById('updateModal').classList.remove('flex');
+        }
+
+        async function submitUpdate() {
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerText = "UPDATING...";
+
+            const payload = {
+                action: "update_row",
+                password: currentPass,
+                target_phone: targetPhone,
+                new_status: document.getElementById('newStatus').value,
+                new_pass_no: document.getElementById('newPassNo').value
+            };
+
+            try {
+                const res = await fetch(GOOGLE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(payload)
+                });
+                const json = await res.json();
+                if (json.result === "success") {
+                    closeUpdate();
+                    refreshData();
+                } else {
+                    alert("Update failed: " + json.error);
+                }
+            } catch (err) {
+                alert("Network error. Try again.");
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.innerText = "Apply Changes";
+            }
+        }
+    </script>
+</body>
+</html>
