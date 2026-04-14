@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="gu" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>શ્રી વિશ્વકર્મા રાસોત્સવ 2026 | Navratri Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Outfit:wght@100;300;400;600;800&family=Noto+Sans+Gujarati:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        gu: ['Noto Sans Gujarati', 'sans-serif'],
+                    },
+                    colors: {
+                        navratri: {
+                            gold: '#FFD700',
+                            orange: '#FA7F22',
+                            red: '#D81B60',
+                            navy: '#060B13',
+                            cream: '#FFF5E1',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'spin-slow': 'spin 20s linear infinite',
+                        'marquee': 'marquee 30s linear infinite',
+                        'marquee-reverse': 'marquee-reverse 40s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        'marquee-reverse': {
+                            '0%': { transform: 'translateX(-50%)' },
+                            '100%': { transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background: #060B13; color: #FFF; overflow-x: hidden; }
+        .bg-pattern {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('navratri-bg.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.3; z-index: -2;
+        }
+        .glass-nav {
+            background: rgba(6, 11, 19, 0.75);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 225, 0.08);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            border-radius: 32px;
+        }
+        .btn-premium {
+            background: linear-gradient(135deg, #FFD700 0%, #FA7F22 100%);
+            color: #060B13; font-weight: 800;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .btn-premium:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(250, 127, 34, 0.4); }
+
+        /* Gold Ribbon Frame */
+        .team-frame {
+            position: relative; width: 240px; height: 240px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .scalloped-border {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, #FFD700, #B8860B);
+            mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="black" stroke="black" stroke-width="2" stroke-dasharray="2 1.5" /></svg>');
+            -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10-10-4.477-10-10 4.477-10 10-10zm0 1.5c-4.694 0-8.5 3.806-8.5 8.5s3.806 8.5 8.5 8.5 8.5-3.806 8.5-8.5-3.806-8.5-8.5-8.5z" filter="url(%23f)"/><filter id="f"><feTurbulence type="fractalNoise" baseFrequency="5" numOctaves="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2"/></filter></svg>');
+            /* Better Scallop approach: Use a pre-defined SVG Path */
+        }
+
+        .gold-scallop {
+            position: absolute; inset: 10px;
+            background: radial-gradient(circle, #FFD700 0%, #B8860B 100%);
+            clip-path: polygon(100% 50%, 99.14% 56.54%, 96.59% 62.5%, 92.48% 67.33%, 87.01% 70.62%, 80.49% 72.11%, 73.29% 71.65%, 65.85% 69.21%, 58.62% 64.95%, 52.01% 59.12%, 46.42% 52.07%, 42.18% 44.25%, 39.52% 36.14%, 38.57% 28.21%, 39.38% 20.95%, 41.9% 14.81%, 45.96% 10.15%, 51.27% 7.23%, 57.39% 6.13%, 63.8% 6.82%, 69.94% 9.12%, 75.3% 12.72%, 79.43% 17.3%, 81.97% 22.42%, 82.69% 27.67%, 81.5% 32.61%, 78.43% 36.81%, 73.66% 39.9%, 67.5% 41.6%, 60.39% 41.81%, 52.88% 40.57%, 45.54% 38.1%, 38.97% 34.72%, 33.68% 30.82%, 30.14% 26.85%, 28.69% 23.32%, 29.49% 20.69%, 32.55% 19.33%, 37.66% 19.46%, 44.27% 21.11%, 51.72% 24.11%, 59.32% 28.14%, 66.42% 32.74%, 72.37% 37.41%, 76.63% 41.59%, 78.8% 44.75%, 78.69% 46.49%, 76.28% 46.52%, 71.86% 44.69%, 65.91% 41.09%, 59.13% 35.96%, 52.27% 29.7%, 46.06% 22.84%, 41.1% 15.99% ); /* Simplified scallop placeholder */
+        }
+        
+        .team-inner-magenta {
+            position: absolute; inset: 25px;
+            border: 6px solid #800040;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .team-banner-ribbon {
+            position: absolute; bottom: 15px; width: 110%; height: 60px;
+            background: linear-gradient(135deg, #D81B60 0%, #800040 100%);
+            z-index: 5;
+            clip-path: polygon(10% 20%, 90% 20%, 100% 50%, 90% 80%, 10% 80%, 0% 50%);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .team-img-wrapper {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            z-index: 3;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.7);
+        }
+
+        .marquee-container { display: flex; width: fit-content; }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <div class="bg-pattern"></div>
+
+    <nav class="glass-nav fixed top-0 w-full z-50 py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="font-serif font-black text-2xl md:text-3xl text-navratri-gold italic tracking-tight">શ્રી વિશ્વકર્મા રાસોત્સવ</h1>
+            <div class="hidden md:flex items-center space-x-8 font-bold tracking-widest text-[10px] uppercase">
+                <a href="#home" class="hover:text-navratri-orange transition">Home</a>
+                <a href="#features" class="hover:text-navratri-orange transition">Features</a>
+                <a href="#team" class="hover:text-navratri-orange transition">Team</a>
+                <a href="#flashback" class="hover:text-navratri-orange transition">Flashback</a>
+                <a href="#winners" class="hover:text-navratri-orange transition">Winners</a>
+                <a href="register.html" class="btn-premium px-8 py-2.5 rounded-full">Register</a>
+            </div>
+            <a href="register.html" class="md:hidden btn-premium px-6 py-2 rounded-full text-xs">JOIN</a>
+        </div>
+    </nav>
+
+    <!-- 1. Hero -->
+    <section id="home" class="pt-40 pb-20 px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div data-aos="fade-right">
+                <h2 class="font-gu font-black text-5xl md:text-7xl leading-tight mb-8">
+                    શ્રી ગુર્જર સુથાર જ્ઞાતિ <br> 
+                    <span class="text-navratri-orange italic">રાજકોટ દ્વારા આયોજિત</span>
+                </h2>
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="h-[2px] w-12 bg-navratri-gold"></div>
+                    <p class="font-serif italic text-3xl text-navratri-gold">નવરાત્રી મહોત્સવ ૨૦૨૬</p>
+                </div>
+                <a href="register.html" class="btn-premium px-12 py-5 rounded-3xl text-xl flex items-center gap-4 w-fit shadow-2xl">
+                    Get Digital Pass
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+            <div class="relative" data-aos="zoom-in" data-aos-duration="1500">
+                <img src="hero.png" class="w-full relative z-10 animate-float drop-shadow-[0_20px_60px_rgba(250,127,34,0.4)]">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4/5 h-4/5 bg-navratri-orange/20 blur-[120px] rounded-full"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Why Choose Us -->
+    <section id="features" class="py-24 px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-navratri-gold tracking-[0.5em] text-[10px] font-black uppercase mb-4 block">Our Specialties</span>
+                <h2 class="font-gu font-black text-5xl">અમારી વિશેષતા (Why Choose Us?)</h2>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- START OF EDITABLE FEATURES -->
+                <div class="premium-glass p-8 text-center group hover:border-navratri-orange transition duration-500" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-4xl mb-6 transform group-hover:scale-110 transition">🎸</div>
+                    <h3 class="font-black text-xl mb-4 text-navratri-gold">Pure Tradition</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Experience authentic Garba with traditional music and a cultural soul.</p>
+                </div>
+                <div class="premium-glass p-8 text-center group hover:border-navratri-orange transition duration-500" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-4xl mb-6 transform group-hover:scale-110 transition">🛡️</div>
+                    <h3 class="font-black text-xl mb-4 text-navratri-gold">High Security</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Dedicated security team and CCTV monitoring for a safe community environment.</p>
+                </div>
+                <div class="premium-glass p-8 text-center group hover:border-navratri-orange transition duration-500" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-4xl mb-6 transform group-hover:scale-110 transition">🏆</div>
+                    <h3 class="font-black text-xl mb-4 text-navratri-gold">Grand Prizes</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Exciting prizes every night for the best Khelaiyas in all categories.</p>
+                </div>
+                <div class="premium-glass p-8 text-center group hover:border-navratri-orange transition duration-500" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-4xl mb-6 transform group-hover:scale-110 transition">⚡</div>
+                    <h3 class="font-black text-xl mb-4 text-navratri-gold">Digital Pass</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Quick and easy digital registration with instant entry verification.</p>
+                </div>
+                <!-- END OF EDITABLE FEATURES -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Team Marquee -->
+    <section id="team" class="py-32 bg-navratri-navy/30 border-y border-white/5 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 mb-20 text-center" data-aos="fade-up">
+            <h2 class="font-gu font-black text-5xl mb-4">અમારી ટીમ (Meet Our Team)</h2>
+            <p class="text-gray-500 font-medium tracking-widest text-xs uppercase italic">The visionaries behind Vishwakarma Raasotsav</p>
+        </div>
+        <div class="relative w-full">
+            <div class="marquee-container animate-marquee flex gap-16 py-10">
+                <!-- Team Member 1 -->
+                <div class="flex-shrink-0 flex flex-col items-center gap-6 w-[280px]">
+                    <div class="team-frame">
+                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
+                            <!-- Gold Scalloped Ring -->
+                            <path d="M100 20a80 80 0 1 0 0 160 80 80 0 1 0 0-160" fill="none" stroke="#B8860B" stroke-width="20" stroke-dasharray="6 3" />
+                            <circle cx="100" cy="100" r="85" stroke="#FFD700" stroke-width="4" fill="none" />
+                            <!-- Magenta Inner Ring -->
+                            <circle cx="100" cy="100" r="72" stroke="#800040" stroke-width="10" fill="none" />
+                        </svg>
+                        <div class="team-img-wrapper">
+                            <img src="https://placehold.co/200x200/060b13/FFD700?text=Team+1" class="team-photo">
+                        </div>
+                        <!-- Ribbon Banner -->
+                        <div class="team-banner-ribbon">
+                            <div class="text-center">
+                                <h4 class="font-bold text-sm tracking-widest text-white">JAYESHBHAI</h4>
+                                <p class="text-[8px] font-black text-navratri-gold uppercase">PRESIDENT</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Team Member 2 -->
+                <div class="flex-shrink-0 flex flex-col items-center gap-6 w-[280px]">
+                    <div class="team-frame">
+                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
+                            <path d="M100 20a80 80 0 1 0 0 160 80 80 0 1 0 0-160" fill="none" stroke="#B8860B" stroke-width="20" stroke-dasharray="6 3" />
+                            <circle cx="100" cy="100" r="85" stroke="#FFD700" stroke-width="4" fill="none" />
+                            <circle cx="100" cy="100" r="72" stroke="#800040" stroke-width="10" fill="none" />
+                        </svg>
+                        <div class="team-img-wrapper">
+                            <img src="https://placehold.co/200x200/060b13/FA7F22?text=Team+2" class="team-photo">
+                        </div>
+                        <div class="team-banner-ribbon">
+                            <div class="text-center">
+                                <h4 class="font-bold text-sm tracking-widest text-white">RAMESHBHAI</h4>
+                                <p class="text-[8px] font-black text-navratri-gold uppercase">ORGANIZER</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Team Member 3 -->
+                <div class="flex-shrink-0 flex flex-col items-center gap-6 w-[280px]">
+                    <div class="team-frame">
+                        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
+                            <path d="M100 20a80 80 0 1 0 0 160 80 80 0 1 0 0-160" fill="none" stroke="#B8860B" stroke-width="20" stroke-dasharray="6 3" />
+                            <circle cx="100" cy="100" r="85" stroke="#FFD700" stroke-width="4" fill="none" />
+                            <circle cx="100" cy="100" r="72" stroke="#800040" stroke-width="10" fill="none" />
+                        </svg>
+                        <div class="team-img-wrapper">
+                            <img src="https://placehold.co/200x200/060b13/D81B60?text=Team+3" class="team-photo">
+                        </div>
+                        <div class="team-banner-ribbon">
+                            <div class="text-center">
+                                <h4 class="font-bold text-sm tracking-widest text-white">AMITBHAI</h4>
+                                <p class="text-[8px] font-black text-navratri-gold uppercase">CO-ORDINATOR</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Duplicate for seamless scroll -->
+                <div class="flex-shrink-0 flex flex-col items-center gap-6 w-[280px]"><div class="team-frame"><svg class="absolute inset-0 w-full h-full" viewBox="0 0 200 200"><path d="M100 20a80 80 0 1 0 0 160 80 80 0 1 0 0-160" fill="none" stroke="#B8860B" stroke-width="20" stroke-dasharray="6 3" /><circle cx="100" cy="100" r="85" stroke="#FFD700" stroke-width="4" fill="none" /><circle cx="100" cy="100" r="72" stroke="#800040" stroke-width="10" fill="none" /></svg><div class="team-img-wrapper"><img src="https://placehold.co/200x200/060b13/FFD700?text=Team+1" class="team-photo"></div><div class="team-banner-ribbon"><div class="text-center"><h4 class="font-bold text-sm tracking-widest text-white">JAYESHBHAI</h4><p class="text-[8px] font-black text-navratri-gold uppercase">PRESIDENT</p></div></div></div></div>
+                <div class="flex-shrink-0 flex flex-col items-center gap-6 w-[280px]"><div class="team-frame"><svg class="absolute inset-0 w-full h-full" viewBox="0 0 200 200"><path d="M100 20a80 80 0 1 0 0 160 80 80 0 1 0 0-160" fill="none" stroke="#B8860B" stroke-width="20" stroke-dasharray="6 3" /><circle cx="100" cy="100" r="85" stroke="#FFD700" stroke-width="4" fill="none" /><circle cx="100" cy="100" r="72" stroke="#800040" stroke-width="10" fill="none" /></svg><div class="team-img-wrapper"><img src="https://placehold.co/200x200/060b13/FA7F22?text=Team+2" class="team-photo"></div><div class="team-banner-ribbon"><div class="text-center"><h4 class="font-bold text-sm tracking-widest text-white">RAMESHBHAI</h4><p class="text-[8px] font-black text-navratri-gold uppercase">ORGANIZER</p></div></div></div></div>
+                <div class="flex-shrink-0 flex flex-col items-center gap-6 w-[280px]"><div class="team-frame"><svg class="absolute inset-0 w-full h-full" viewBox="0 0 200 200"><path d="M100 20a80 80 0 1 0 0 160 80 80 0 1 0 0-160" fill="none" stroke="#B8860B" stroke-width="20" stroke-dasharray="6 3" /><circle cx="100" cy="100" r="85" stroke="#FFD700" stroke-width="4" fill="none" /><circle cx="100" cy="100" r="72" stroke="#800040" stroke-width="10" fill="none" /></svg><div class="team-img-wrapper"><img src="https://placehold.co/200x200/060b13/D81B60?text=Team+3" class="team-photo"></div><div class="team-banner-ribbon"><div class="text-center"><h4 class="font-bold text-sm tracking-widest text-white">AMITBHAI</h4><p class="text-[8px] font-black text-navratri-gold uppercase">CO-ORDINATOR</p></div></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Flashback Slider -->
+    <section id="flashback" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20" data-aos="fade-up">
+                <span class="text-navratri-gold tracking-[1em] text-[10px] font-black uppercase mb-4 block">Archive</span>
+                <h2 class="font-gu font-black text-5xl">ગત વર્ષની યાદો (Flashback)</h2>
+            </div>
+            <div class="relative" data-aos="fade-up">
+                <div class="overflow-hidden rounded-[50px] premium-glass p-4 border-white/5">
+                    <div class="flex transition-transform duration-1000 ease-in-out" id="slides">
+                        <div class="min-w-full px-2 h-[550px] overflow-hidden rounded-[40px]"><img src="https://images.unsplash.com/photo-1599305090598-fe179d501c27?auto=format&fit=crop&q=80" class="w-full h-full object-cover"></div>
+                        <div class="min-w-full px-2 h-[550px] overflow-hidden rounded-[40px]"><img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&q=80" class="w-full h-full object-cover"></div>
+                        <div class="min-w-full px-2 h-[550px] overflow-hidden rounded-[40px]"><img src="https://images.unsplash.com/photo-1593694359656-c1d299973800?auto=format&fit=crop&q=80" class="w-full h-full object-cover"></div>
+                        <div class="min-w-full px-2 h-[550px] overflow-hidden rounded-[40px]"><img src="https://images.unsplash.com/photo-1598379435231-6f43351f0440?auto=format&fit=crop&q=80" class="w-full h-full object-cover"></div>
+                        <div class="min-w-full px-2 h-[550px] overflow-hidden rounded-[40px]"><img src="https://images.unsplash.com/photo-1582192732249-1456d92ec2c3?auto=format&fit=crop&q=80" class="w-full h-full object-cover"></div>
+                    </div>
+                </div>
+                <div class="flex justify-center gap-6 mt-12">
+                    <button onclick="moveSlide(-1)" class="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-navy transition duration-500"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
+                    <button onclick="moveSlide(1)" class="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-navy transition duration-500"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. 2025 Winners Only -->
+    <section id="winners" class="py-24 px-6 border-t border-white/5 relative z-10">
+        <div class="max-w-7xl mx-auto" data-aos="fade-up">
+            <h3 class="text-center font-serif italic text-4xl text-navratri-gold mb-16 underline underline-offset-8 decoration-navratri-orange/30">2025 Grand Winners</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                <div class="space-y-4 text-center group">
+                    <div class="aspect-[4/5] bg-white/5 rounded-[40px] overflow-hidden border border-white/10 group-hover:border-navratri-orange transition duration-500 shadow-2xl">
+                        <img src="https://placehold.co/400x500/060b13/FA7F22?text=Winner+Male" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    </div>
+                    <p class="font-black tracking-[0.3em] text-xs uppercase text-navratri-gold mt-6 italic">BEST PLAYER (MALE)</p>
+                </div>
+                <div class="space-y-4 text-center group">
+                    <div class="aspect-[4/5] bg-white/5 rounded-[40px] overflow-hidden border border-white/10 group-hover:border-navratri-pink transition duration-500 shadow-2xl">
+                        <img src="https://placehold.co/400x500/060b13/D81B60?text=Winner+Female" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    </div>
+                    <p class="font-black tracking-[0.3em] text-xs uppercase text-navratri-pink mt-6 italic">BEST PLAYER (FEMALE)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsor Section -->
+    <section class="py-20 bg-white/5 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 mb-12 flex items-center gap-6"><h5 class="flex-shrink-0 font-black tracking-widest text-[10px] uppercase text-gray-500">Official Partners 2026</h5><div class="h-[1px] w-full bg-white/10"></div></div>
+        <div class="relative w-full">
+            <div class="marquee-container animate-marquee-reverse flex items-center gap-24 py-5 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition duration-700 text-white">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" class="h-8 md:h-12 w-auto">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" class="h-8 md:h-12 w-auto">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" class="h-8 md:h-10 w-auto">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" class="h-8 md:h-12 w-auto">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" class="h-8 md:h-12 w-auto">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" class="h-8 md:h-12 w-auto">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-24 px-6 bg-navratri-navy">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-16 text-center md:text-left">
+            <div class="lg:col-span-2"><h3 class="font-serif italic font-black text-4xl text-navratri-gold mb-8">શ્રી વિશ્વકર્મા રાસોત્સવ</h3><p class="text-gray-500 max-w-sm mx-auto md:mx-0 leading-loose font-medium">Keeping Rajkot's Suthar Gnati traditions alive with a blend of cultural divinity and modern digital excellence.</p></div>
+            <div><h4 class="font-bold tracking-[0.3em] text-[10px] uppercase mb-10 text-white">Navigation</h4><ul class="space-y-6 text-gray-500 font-bold text-xs uppercase tracking-widest"><li><a href="#features" class="hover:text-navratri-orange transition">About Specialities</a></li><li><a href="#flashback" class="hover:text-navratri-orange transition">Historical Archive</a></li><li><a href="register.html" class="hover:text-navratri-orange transition">Digital Pass Portal</a></li></ul></div>
+            <div><h4 class="font-bold tracking-[0.3em] text-[10px] uppercase mb-10 text-white">Location</h4><p class="text-gray-500 font-bold text-xs uppercase tracking-widest leading-relaxed">Rajkot, Gujarat<br>Gnativadi, Main Road</p></div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 50 });
+        let currentSlide = 0;
+        const slides = document.getElementById('slides');
+        function moveSlide(direction) {
+            const count = slides.children.length;
+            currentSlide = (currentSlide + direction + count) % count;
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+    </script>
+</body>
+</html>

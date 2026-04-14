@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="gu" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | શ્રી વિશ્વકર્મા રાસોત્સવ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Outfit:wght@100;300;400;600;800&family=Noto+Sans+Gujarati:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        gu: ['Noto Sans Gujarati', 'sans-serif'],
+                    },
+                    colors: {
+                        navratri: {
+                            gold: '#FFD700',
+                            orange: '#FA7F22',
+                            red: '#D81B60',
+                            navy: '#060B13',
+                            pink: '#FF007F',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background: #060B13; color: #FFF; overflow-x: hidden; }
+        .bg-pattern {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('navratri-bg.jpg');
+            background-size: cover; background-position: center;
+            opacity: 0.25; z-index: -2;
+        }
+        .page-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(6,11,19,0.5) 0%, rgba(6,11,19,0.95) 100%);
+            z-index: -1;
+        }
+        .festive-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #FA7F22;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border-radius: 40px;
+        }
+        .input-premium {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #FFF;
+        }
+        .input-premium:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #FA7F22;
+            outline: none;
+            box-shadow: 0 0 20px rgba(250, 127, 34, 0.3);
+            transform: scale(1.01);
+        }
+        .selection-box {
+            border: 2px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+        .selection-box:hover { background: rgba(255, 255, 255, 0.05); }
+        .selection-box.active {
+            border-color: #FA7F22;
+            background: rgba(250, 127, 34, 0.1);
+            box-shadow: 0 0 15px rgba(250, 127, 34, 0.2);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #FF007F 0%, #FA7F22 100%);
+            color: #FFF; font-weight: 900;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-submit:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 20px 40px rgba(216, 27, 96, 0.4); }
+        
+        .floating-element { animation: floating 6s ease-in-out infinite; }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Price tag styling */
+        .price-chip {
+            background: linear-gradient(90deg, #FA7F22, #D81B60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <div class="bg-pattern"></div>
+    <div class="page-overlay"></div>
+
+    <nav class="p-8">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3 text-navratri-gold group transition">
+                <svg class="w-6 h-6 transform group-hover:-translate-x-2 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                <span class="font-bold tracking-[0.3em] text-[10px] uppercase">Back to Home</span>
+            </a>
+            <h1 class="font-serif italic font-black text-2xl text-navratri-gold drop-shadow-lg">શ્રી વિશ્વકર્મા રાસોત્સવ ૨૦૨૬</h1>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6 py-12">
+        <div class="text-center mb-20" data-aos="fade-down">
+            <h2 class="text-6xl md:text-7xl font-serif italic font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-navratri-gold via-navratri-orange to-navratri-pink">Pass Registration</h2>
+            <p class="text-gray-400 font-medium text-xl italic max-w-2xl mx-auto leading-relaxed">Join the most aesthetic celebration of Rajkot. Fill in the details to secure your spot.</p>
+        </div>
+
+        <div class="festive-card p-8 md:p-16 relative overflow-hidden" data-aos="fade-up">
+            <form action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data" class="space-y-16">
+                <!-- Web3Forms Access Key (Placeholder) -->
+                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                <input type="hidden" name="subject" value="New Website Registration 2026">
+
+                <!-- 1. Personal Information -->
+                <div class="space-y-10">
+                    <div class="flex items-center gap-6">
+                        <span class="w-12 h-12 rounded-full border border-navratri-orange/30 flex items-center justify-center font-black text-navratri-orange">01</span>
+                        <h3 class="font-serif text-3xl italic font-black">વિગતો (Personal Info)</h3>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-10">
+                        <div class="space-y-4">
+                            <label class="block text-navratri-gold font-bold text-xs uppercase tracking-[0.2em]">Full Name (English or Gujarati)</label>
+                            <input type="text" name="full_name" required placeholder="પૂરું નામ / Full Name" class="w-full input-premium p-6 rounded-[24px] text-xl font-bold">
+                        </div>
+                        <div class="space-y-4">
+                            <label class="block text-navratri-gold font-bold text-xs uppercase tracking-[0.2em]">WhatsApp Number</label>
+                            <input type="tel" name="phone" required placeholder="+91 98765 43210" class="w-full input-premium p-6 rounded-[24px] text-xl font-bold">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Category Selection -->
+                <div class="space-y-10">
+                    <div class="flex items-center gap-6">
+                        <span class="w-12 h-12 rounded-full border border-navratri-orange/30 flex items-center justify-center font-black text-navratri-orange">02</span>
+                        <h3 class="font-serif text-3xl italic font-black">કેટેગરી પસંદ કરો (Category)</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Male -->
+                        <label class="relative cursor-pointer group">
+                            <input type="radio" name="category" value="male" onclick="updateLogic('male')" required class="peer sr-only">
+                            <div class="selection-box p-8 rounded-[30px] flex flex-col items-center gap-4 text-center peer-checked:selection-box active group-hover:bg-white/5">
+                                <span class="text-4xl group-hover:scale-110 transition duration-300">🕺</span>
+                                <div class="font-black text-xl tracking-wide">MALE</div>
+                                <div class="text-navratri-gold font-bold">₹1500</div>
+                            </div>
+                        </label>
+                        <!-- Female -->
+                        <label class="relative cursor-pointer group">
+                            <input type="radio" name="category" value="female" onclick="updateLogic('female')" class="peer sr-only">
+                            <div class="selection-box p-8 rounded-[30px] flex flex-col items-center gap-4 text-center peer-checked:selection-box active group-hover:bg-white/5">
+                                <span class="text-4xl group-hover:scale-110 transition duration-300">💃</span>
+                                <div class="font-black text-xl tracking-wide">FEMALE</div>
+                                <div class="text-navratri-gold font-bold">₹1000</div>
+                            </div>
+                        </label>
+                        <!-- Kid -->
+                        <label class="relative cursor-pointer group">
+                            <input type="radio" name="category" value="kid" onclick="updateLogic('kid')" class="peer sr-only">
+                            <div class="selection-box p-8 rounded-[30px] flex flex-col items-center gap-4 text-center peer-checked:selection-box active group-hover:bg-white/5">
+                                <span class="text-4xl group-hover:scale-110 transition duration-300">🧸</span>
+                                <div class="font-black text-xl tracking-wide">KID</div>
+                                <div class="text-navratri-gold font-bold">₹1000</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Hidden Kid-specific gender selection -->
+                    <div id="kidGenderArea" class="hidden animate-fade-in space-y-6 pt-4">
+                        <p class="text-navratri-orange font-bold text-center tracking-widest text-sm uppercase">Select Kid's Gender</p>
+                        <div class="flex justify-center gap-8">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="radio" name="kid_gender" value="male_kid" class="w-6 h-6 accent-navratri-orange">
+                                <span class="font-bold">Male Kid</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="radio" name="kid_gender" value="female_kid" class="w-6 h-6 accent-navratri-pink">
+                                <span class="font-bold">Female Kid</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Special Features -->
+                <div class="space-y-10">
+                    <div class="flex items-center gap-6">
+                        <span class="w-12 h-12 rounded-full border border-navratri-orange/30 flex items-center justify-center font-black text-navratri-orange">03</span>
+                        <h3 class="font-serif text-3xl italic font-black">સ્પેશિયલ નંબર (Selection Number)</h3>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-10">
+                        <div class="space-y-6">
+                            <label class="relative block cursor-pointer group">
+                                <input type="checkbox" id="specialNumCheck" name="wants_special_number" value="Yes" onchange="updateFare()" class="peer sr-only">
+                                <div class="p-8 rounded-[30px] border border-white/5 bg-white/[0.02] peer-checked:border-navratri-gold peer-checked:bg-navratri-gold/5 transition group-hover:bg-white/5">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h4 class="font-black text-xl">Selection Pass Number</h4>
+                                        <div class="w-8 h-8 rounded-full border-2 border-white/10 flex items-center justify-center peer-checked:bg-navratri-gold peer-checked:border-navratri-gold transition">
+                                            <svg class="w-5 h-5 text-navratri-navy opacity-0 peer-checked:opacity-100" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-400 mt-2 font-medium">
+                                        <span class="text-navratri-gold">English:</span> Please provide 3 choices (e.g., 1, 2, 3). If your 1st choice is taken, we will check your 2nd or 3rd choice.<br>
+                                        <span class="text-navratri-gold font-gu">ગુજરાતી:</span> મહેરબાની કરીને ૩ પસંદગી આપો (દા.ત. ૧, ૨, ૩). જો તમારી ૧લી પસંદગી ઉપલબ્ધ ન હોય, તો અમે તમારી બીજી અથવા ત્રીજી પસંદગી આપીશું.
+                                    </p>
+                                </div>
+                            </label>
+
+                            <div id="specialNumberInputs" class="hidden grid grid-cols-3 gap-4" data-aos="zoom-in">
+                                <input type="number" name="pass_choice_1" placeholder="C1" class="w-full input-premium p-4 rounded-xl text-center font-black text-navratri-gold">
+                                <input type="number" name="pass_choice_2" placeholder="C2" class="w-full input-premium p-4 rounded-xl text-center font-black text-navratri-gold">
+                                <input type="number" name="pass_choice_3" placeholder="C3" class="w-full input-premium p-4 rounded-xl text-center font-black text-navratri-gold">
+                            </div>
+                        </div>
+
+                        <!-- Live Calculator -->
+                        <div class="bg-black/40 p-10 rounded-[40px] border border-white/10 flex flex-col justify-center items-center text-center">
+                            <p class="text-gray-500 font-bold tracking-[0.2em] text-xs uppercase mb-4">Live Fare Summary</p>
+                            <div class="text-6xl font-black mb-2" id="totalDisplay">₹0</div>
+                            <div id="fareBreakdown" class="text-sm text-gray-500 font-medium italic">Please select a category</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Documents & Photos -->
+                <div class="space-y-10">
+                    <div class="flex items-center gap-6">
+                        <span class="w-12 h-12 rounded-full border border-navratri-orange/30 flex items-center justify-center font-black text-navratri-orange">04</span>
+                        <h3 class="font-serif text-3xl italic font-black">ફોટા અને ડોક્યુમેન્ટ્સ (Uploads)</h3>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <label class="block text-navratri-gold font-bold text-xs uppercase tracking-[0.2em]">Profile Photo (For Pass)</label>
+                            <input type="file" name="user_photo" accept="image/*" required class="block w-full text-sm text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-black file:font-black file:bg-navratri-gold cursor-pointer transition">
+                        </div>
+                        <div class="space-y-4">
+                            <label class="block text-navratri-gold font-bold text-xs uppercase tracking-[0.2em]">Aadhar Card Photo</label>
+                            <input type="file" name="aadhar_photo" accept="image/*" required class="block w-full text-sm text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-black file:font-black file:bg-navratri-pink cursor-pointer transition">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Payment Details -->
+                <div class="space-y-10 pt-12 border-t border-white/5">
+                    <div class="flex items-center gap-6">
+                        <span class="w-12 h-12 rounded-full border border-navratri-orange/30 flex items-center justify-center font-black text-navratri-orange">05</span>
+                        <h3 class="font-serif text-3xl italic font-black">ચુકવણી (Payment)</h3>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-12">
+                        <!-- Left Side: Selection -->
+                        <div class="space-y-8">
+                            <div class="flex gap-6">
+                                <label class="flex-1 cursor-pointer">
+                                    <input type="radio" name="payment_method" value="Cash" onclick="togglePaymentSection('cash')" required class="peer sr-only">
+                                    <div class="p-8 rounded-[30px] border border-white/10 text-center peer-checked:border-navratri-orange peer-checked:bg-navratri-orange/5 transition">
+                                        <div class="font-black">CASH</div>
+                                    </div>
+                                </label>
+                                <label class="flex-1 cursor-pointer">
+                                    <input type="radio" name="payment_method" value="Online" onclick="togglePaymentSection('online')" class="peer sr-only">
+                                    <div class="p-8 rounded-[30px] border border-white/10 text-center peer-checked:border-green-500 peer-checked:bg-green-500/5 transition">
+                                        <div class="font-black text-green-500">ONLINE</div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Payment Screenshots (Always show when online selected) -->
+                            <div id="onlineUploadArea" class="hidden space-y-4">
+                                <label class="block text-navratri-gold font-bold text-xs uppercase tracking-[0.2em]">Payment Screenshot</label>
+                                <input type="file" name="payment_ss" accept="image/*" class="block w-full text-sm text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:font-black file:bg-green-500 cursor-pointer">
+                            </div>
+                        </div>
+
+                        <!-- Right Side: Instructions -->
+                        <div class="premium-glass p-8 space-y-6">
+                            <!-- Online View -->
+                            <div id="onlineInstruct" class="hidden text-center space-y-6">
+                                <p class="text-green-500 font-black tracking-widest text-xs uppercase">Scan QR & Pay Now</p>
+                                <div class="inline-block p-4 bg-white rounded-3xl">
+                                    <img src="YOUR_QR_CODE_URL" alt="Payment QR" class="w-48 h-48 rounded-xl invert opacity-90 transition hover:opacity-100">
+                                </div>
+                                <p class="text-xs text-gray-500 italic">Please attach screenshot after payment.</p>
+                            </div>
+
+                            <!-- Cash View -->
+                            <div id="cashInstruct" class="space-y-6">
+                                <div class="bg-red-500/10 border border-red-500/20 p-6 rounded-2xl">
+                                    <p class="text-red-500 font-black text-center animate-pulse tracking-wide text-sm mb-2">IMPORTANT NOTICE</p>
+                                    <p class="text-white text-xs font-bold text-center leading-relaxed">
+                                        English: Cash must be paid within 7 days of form submission.<br>
+                                        <span class="font-gu text-sm mt-2 block">ગુજરાતી: ફોર્મ સબમિટ કર્યાના 7 દિવસમાં રોકડ જમા કરાવવી ફરજિયાત છે.</span>
+                                    </p>
+                                </div>
+                                <div class="space-y-4">
+                                    <p class="text-navratri-gold font-black text-xs uppercase tracking-[0.2em] text-center">Collection Centers / કલેક્શન સેન્ટર</p>
+                                    <ul class="grid grid-cols-2 gap-2 text-[10px] font-bold tracking-widest text-gray-500 uppercase">
+                                        <li>1. Main Office</li>
+                                        <li>2. Sector A Point</li>
+                                        <li>3. Plaza Center</li>
+                                        <li>4. Gnati Hall</li>
+                                        <li>5. North Depot</li>
+                                        <li>6. South Depot</li>
+                                        <li>7. Ring Road Point</li>
+                                    </ul>
+                                </div>
+                                <p class="text-[10px] text-gray-600 text-center italic">Provide your FULL NAME and CASH to the collector at any center.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-12 text-center space-y-8">
+                    <button type="submit" class="w-full btn-submit py-8 rounded-[30px] text-4xl italic tracking-tighter uppercase border-b-8 border-navratri-navy/20">
+                        Secure My Digital Pass Now
+                    </button>
+                    <p class="text-gray-600 text-[10px] font-black tracking-[0.5em] uppercase">© 2026 Shree Gurjar Suthar Gnati. All rights reserved.</p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, duration: 1000 });
+
+        const prices = {
+            male: 1500,
+            female: 1000,
+            kid: 1000,
+            special: 500
+        };
+
+        let selectedBasePrice = 0;
+
+        function updateLogic(cat) {
+            // Update Base Price
+            selectedBasePrice = prices[cat];
+            
+            // Toggle Kid UI
+            const kidArea = document.getElementById('kidGenderArea');
+            kidArea.classList.toggle('hidden', cat !== 'kid');
+            const kidInputs = kidArea.querySelectorAll('input');
+            kidInputs.forEach(i => i.required = (cat === 'kid'));
+
+            updateFare();
+        }
+
+        function updateFare() {
+            const isSpecial = document.getElementById('specialNumCheck').checked;
+            const specialInputs = document.getElementById('specialNumberInputs');
+            specialInputs.classList.toggle('hidden', !isSpecial);
+            
+            const total = selectedBasePrice + (isSpecial ? prices.special : 0);
+            
+            // Update Display
+            document.getElementById('totalDisplay').innerText = `₹${total}`;
+            
+            // Build Breakdown
+            let breakdown = '';
+            if (selectedBasePrice > 0) {
+                breakdown = `${selectedBasePrice}`;
+                if (isSpecial) breakdown += ` + ${prices.special} (Special Num)`;
+                breakdown += ` = Total ₹${total}`;
+            } else {
+                breakdown = "Please select a category";
+            }
+            document.getElementById('fareBreakdown').innerText = breakdown;
+        }
+
+        function togglePaymentSection(mode) {
+            const onlineInstruct = document.getElementById('onlineInstruct');
+            const cashInstruct = document.getElementById('cashInstruct');
+            const onlineUpload = document.getElementById('onlineUploadArea');
+            
+            const isOnline = (mode === 'online');
+            
+            onlineInstruct.classList.toggle('hidden', !isOnline);
+            cashInstruct.classList.toggle('hidden', isOnline);
+            onlineUpload.classList.toggle('hidden', !isOnline);
+            
+            const ssInput = onlineUpload.querySelector('input');
+            ssInput.required = isOnline;
+        }
+    </script>
+</body>
+</html>
