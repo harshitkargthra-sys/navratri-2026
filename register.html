@@ -350,7 +350,7 @@
 
                 // 2. Extra data formatting
                 payload.total_amount = finalTotalAmount;
-                payload.pass_choices = payload.wants_special_number ? `${payload.pass_choice_1}, ${payload.pass_choice_2}, ${payload.pass_choice_3}` : "-";
+                payload.pass_choices = payload.wants_special_number ? `${payload.pass_choice_1}, ${payload.pass_choice_2}, ${payload.pass_choice_3}` : "No Special Number";
 
                 // 3. Post to Google (using no-cors as it's the only way to bypass Google's strict CORS on POST)
                 await fetch(GOOGLE_URL, {
