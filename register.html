@@ -66,39 +66,42 @@
             box-shadow: 0 0 20px rgba(250, 127, 34, 0.3);
             transform: scale(1.01);
         }
-        .selection-box {
-            border: 2px solid rgba(255, 255, 255, 0.05);
-            transition: 0.3s;
-        }
-        .selection-box:hover { background: rgba(255, 255, 255, 0.05); }
+        .selection-box { border: 2px solid rgba(255, 255, 255, 0.05); transition: 0.3s; }
         .selection-box.active {
             border-color: #FA7F22;
             background: rgba(250, 127, 34, 0.1);
             box-shadow: 0 0 15px rgba(250, 127, 34, 0.2);
         }
-
         .btn-submit {
             background: linear-gradient(135deg, #FF007F 0%, #FA7F22 100%);
             color: #FFF; font-weight: 900;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .btn-submit:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 20px 40px rgba(216, 27, 96, 0.4); }
-        
-        .floating-element { animation: floating 6s ease-in-out infinite; }
-        @keyframes floating {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
+        .btn-submit:hover:not(:disabled) { transform: translateY(-5px) scale(1.02); box-shadow: 0 20px 40px rgba(216, 27, 96, 0.4); }
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* Price tag styling */
-        .price-chip {
-            background: linear-gradient(90deg, #FA7F22, #D81B60);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Loader */
+        #loadingOverlay {
+            position: fixed; inset: 0; background: rgba(6, 11, 19, 0.9);
+            z-index: 9999; display: none; align-items: center; justify-content: center;
+            backdrop-filter: blur(10px);
         }
+        .loader-mandala {
+            width: 80px; height: 80px; border: 4px solid #FA7F22;
+            border-top: 4px solid #FFD700; border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="font-sans antialiased">
+    <div id="loadingOverlay">
+        <div class="text-center">
+            <div class="loader-mandala mx-auto mb-6"></div>
+            <p class="text-navratri-gold font-black tracking-widest uppercase text-sm animate-pulse">Uploading Photos... Do not refresh</p>
+        </div>
+    </div>
+
     <div class="bg-pattern"></div>
     <div class="page-overlay"></div>
 
@@ -115,15 +118,11 @@
     <main class="max-w-5xl mx-auto px-6 py-12">
         <div class="text-center mb-20" data-aos="fade-down">
             <h2 class="text-6xl md:text-7xl font-serif italic font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-navratri-gold via-navratri-orange to-navratri-pink">Pass Registration</h2>
-            <p class="text-gray-400 font-medium text-xl italic max-w-2xl mx-auto leading-relaxed">Join the most aesthetic celebration of Rajkot. Fill in the details to secure your spot.</p>
+            <p class="text-gray-400 font-medium text-xl italic max-w-2xl mx-auto leading-relaxed">Your data will be securely stored in our Google Cloud Database.</p>
         </div>
 
         <div class="festive-card p-8 md:p-16 relative overflow-hidden" data-aos="fade-up">
-            <form action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data" class="space-y-16">
-                <!-- Web3Forms Access Key (Placeholder) -->
-                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-                <input type="hidden" name="subject" value="New Website Registration 2026">
-
+            <form id="registrationForm" class="space-y-16">
                 <!-- 1. Personal Information -->
                 <div class="space-y-10">
                     <div class="flex items-center gap-6">
@@ -133,7 +132,7 @@
                     
                     <div class="grid md:grid-cols-2 gap-10">
                         <div class="space-y-4">
-                            <label class="block text-navratri-gold font-bold text-xs uppercase tracking-[0.2em]">Full Name (English or Gujarati)</label>
+                            <label class="block text-navratri-gold font-bold text-xs uppercase tracking-[0.2em]">Full Name</label>
                             <input type="text" name="full_name" required placeholder="પૂરું નામ / Full Name" class="w-full input-premium p-6 rounded-[24px] text-xl font-bold">
                         </div>
                         <div class="space-y-4">
@@ -151,47 +150,37 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Male -->
                         <label class="relative cursor-pointer group">
                             <input type="radio" name="category" value="male" onclick="updateLogic('male')" required class="peer sr-only">
                             <div class="selection-box p-8 rounded-[30px] flex flex-col items-center gap-4 text-center peer-checked:selection-box active group-hover:bg-white/5">
                                 <span class="text-4xl group-hover:scale-110 transition duration-300">🕺</span>
-                                <div class="font-black text-xl tracking-wide">MALE</div>
+                                <div class="font-black text-xl tracking-wide uppercase">Male</div>
                                 <div class="text-navratri-gold font-bold">₹1500</div>
                             </div>
                         </label>
-                        <!-- Female -->
                         <label class="relative cursor-pointer group">
                             <input type="radio" name="category" value="female" onclick="updateLogic('female')" class="peer sr-only">
                             <div class="selection-box p-8 rounded-[30px] flex flex-col items-center gap-4 text-center peer-checked:selection-box active group-hover:bg-white/5">
                                 <span class="text-4xl group-hover:scale-110 transition duration-300">💃</span>
-                                <div class="font-black text-xl tracking-wide">FEMALE</div>
+                                <div class="font-black text-xl tracking-wide uppercase">Female</div>
                                 <div class="text-navratri-gold font-bold">₹1000</div>
                             </div>
                         </label>
-                        <!-- Kid -->
                         <label class="relative cursor-pointer group">
                             <input type="radio" name="category" value="kid" onclick="updateLogic('kid')" class="peer sr-only">
                             <div class="selection-box p-8 rounded-[30px] flex flex-col items-center gap-4 text-center peer-checked:selection-box active group-hover:bg-white/5">
                                 <span class="text-4xl group-hover:scale-110 transition duration-300">🧸</span>
-                                <div class="font-black text-xl tracking-wide">KID</div>
+                                <div class="font-black text-xl tracking-wide uppercase">Kid</div>
                                 <div class="text-navratri-gold font-bold">₹1000</div>
                             </div>
                         </label>
                     </div>
 
-                    <!-- Hidden Kid-specific gender selection -->
                     <div id="kidGenderArea" class="hidden animate-fade-in space-y-6 pt-4">
                         <p class="text-navratri-orange font-bold text-center tracking-widest text-sm uppercase">Select Kid's Gender</p>
                         <div class="flex justify-center gap-8">
-                            <label class="flex items-center gap-3 cursor-pointer">
-                                <input type="radio" name="kid_gender" value="male_kid" class="w-6 h-6 accent-navratri-orange">
-                                <span class="font-bold">Male Kid</span>
-                            </label>
-                            <label class="flex items-center gap-3 cursor-pointer">
-                                <input type="radio" name="kid_gender" value="female_kid" class="w-6 h-6 accent-navratri-pink">
-                                <span class="font-bold">Female Kid</span>
-                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="kid_gender" value="male_kid" class="w-6 h-6 accent-navratri-orange"><span class="font-bold">Male Kid</span></label>
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="kid_gender" value="female_kid" class="w-6 h-6 accent-navratri-pink"><span class="font-bold">Female Kid</span></label>
                         </div>
                     </div>
                 </div>
@@ -210,9 +199,7 @@
                                 <div class="p-8 rounded-[30px] border border-white/5 bg-white/[0.02] peer-checked:border-navratri-gold peer-checked:bg-navratri-gold/5 transition group-hover:bg-white/5">
                                     <div class="flex justify-between items-center mb-2">
                                         <h4 class="font-black text-xl">Selection Pass Number</h4>
-                                        <div class="w-8 h-8 rounded-full border-2 border-white/10 flex items-center justify-center peer-checked:bg-navratri-gold peer-checked:border-navratri-gold transition">
-                                            <svg class="w-5 h-5 text-navratri-navy opacity-0 peer-checked:opacity-100" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg>
-                                        </div>
+                                        <div class="w-8 h-8 rounded-full border-2 border-white/10 flex items-center justify-center peer-checked:bg-navratri-gold peer-checked:border-navratri-gold transition"><svg class="w-5 h-5 text-navratri-navy opacity-0 peer-checked:opacity-100" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"></path></svg></div>
                                     </div>
                                     <p class="text-sm text-gray-400 mt-2 font-medium">
                                         <span class="text-navratri-gold">English:</span> Please provide 3 choices (e.g., 1, 2, 3). If your 1st choice is taken, we will check your 2nd or 3rd choice.<br>
@@ -220,15 +207,8 @@
                                     </p>
                                 </div>
                             </label>
-
-                            <div id="specialNumberInputs" class="hidden grid grid-cols-3 gap-4" data-aos="zoom-in">
-                                <input type="number" name="pass_choice_1" placeholder="C1" class="w-full input-premium p-4 rounded-xl text-center font-black text-navratri-gold">
-                                <input type="number" name="pass_choice_2" placeholder="C2" class="w-full input-premium p-4 rounded-xl text-center font-black text-navratri-gold">
-                                <input type="number" name="pass_choice_3" placeholder="C3" class="w-full input-premium p-4 rounded-xl text-center font-black text-navratri-gold">
-                            </div>
+                            <div id="specialNumberInputs" class="hidden grid grid-cols-3 gap-4"><input type="number" name="pass_choice_1" placeholder="C1" class="w-full input-premium p-4 rounded-xl text-center font-black text-navratri-gold"><input type="number" name="pass_choice_2" placeholder="C2" class="w-full input-premium p-4 rounded-xl text-center font-black text-navratri-gold"><input type="number" name="pass_choice_3" placeholder="C3" class="w-full input-premium p-4 rounded-xl text-center font-black text-navratri-gold"></div>
                         </div>
-
-                        <!-- Live Calculator -->
                         <div class="bg-black/40 p-10 rounded-[40px] border border-white/10 flex flex-col justify-center items-center text-center">
                             <p class="text-gray-500 font-bold tracking-[0.2em] text-xs uppercase mb-4">Live Fare Summary</p>
                             <div class="text-6xl font-black mb-2" id="totalDisplay">₹0</div>
@@ -243,15 +223,14 @@
                         <span class="w-12 h-12 rounded-full border border-navratri-orange/30 flex items-center justify-center font-black text-navratri-orange">04</span>
                         <h3 class="font-serif text-3xl italic font-black">ફોટા અને ડોક્યુમેન્ટ્સ (Uploads)</h3>
                     </div>
-
                     <div class="grid md:grid-cols-2 gap-8">
                         <div class="space-y-4">
                             <label class="block text-navratri-gold font-bold text-xs uppercase tracking-[0.2em]">Profile Photo (For Pass)</label>
-                            <input type="file" name="user_photo" accept="image/*" required class="block w-full text-sm text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-black file:font-black file:bg-navratri-gold cursor-pointer transition">
+                            <input type="file" id="photoFile" name="photo" accept="image/*" required class="block w-full text-sm text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-black file:font-black file:bg-navratri-gold cursor-pointer transition">
                         </div>
                         <div class="space-y-4">
                             <label class="block text-navratri-gold font-bold text-xs uppercase tracking-[0.2em]">Aadhar Card Photo</label>
-                            <input type="file" name="aadhar_photo" accept="image/*" required class="block w-full text-sm text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-black file:font-black file:bg-navratri-pink cursor-pointer transition">
+                            <input type="file" id="aadharFile" name="aadhar" accept="image/*" required class="block w-full text-sm text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-black file:font-black file:bg-navratri-pink cursor-pointer transition">
                         </div>
                     </div>
                 </div>
@@ -262,142 +241,125 @@
                         <span class="w-12 h-12 rounded-full border border-navratri-orange/30 flex items-center justify-center font-black text-navratri-orange">05</span>
                         <h3 class="font-serif text-3xl italic font-black">ચુકવણી (Payment)</h3>
                     </div>
-
                     <div class="grid md:grid-cols-2 gap-12">
-                        <!-- Left Side: Selection -->
                         <div class="space-y-8">
                             <div class="flex gap-6">
-                                <label class="flex-1 cursor-pointer">
-                                    <input type="radio" name="payment_method" value="Cash" onclick="togglePaymentSection('cash')" required class="peer sr-only">
-                                    <div class="p-8 rounded-[30px] border border-white/10 text-center peer-checked:border-navratri-orange peer-checked:bg-navratri-orange/5 transition">
-                                        <div class="font-black">CASH</div>
-                                    </div>
-                                </label>
-                                <label class="flex-1 cursor-pointer">
-                                    <input type="radio" name="payment_method" value="Online" onclick="togglePaymentSection('online')" class="peer sr-only">
-                                    <div class="p-8 rounded-[30px] border border-white/10 text-center peer-checked:border-green-500 peer-checked:bg-green-500/5 transition">
-                                        <div class="font-black text-green-500">ONLINE</div>
-                                    </div>
-                                </label>
+                                <label class="flex-1 cursor-pointer"><input type="radio" name="payment_method" value="Cash" onclick="togglePaymentSection('cash')" required class="peer sr-only"><div class="p-8 rounded-[30px] border border-white/10 text-center peer-checked:border-navratri-orange peer-checked:bg-navratri-orange/5 transition"><div class="font-black">CASH</div></div></label>
+                                <label class="flex-1 cursor-pointer"><input type="radio" name="payment_method" value="Online" onclick="togglePaymentSection('online')" class="peer sr-only"><div class="p-8 rounded-[30px] border border-white/10 text-center peer-checked:border-green-500 peer-checked:bg-green-500/5 transition"><div class="font-black text-green-500">ONLINE</div></div></label>
                             </div>
-
-                            <!-- Payment Screenshots (Always show when online selected) -->
-                            <div id="onlineUploadArea" class="hidden space-y-4">
-                                <label class="block text-navratri-gold font-bold text-xs uppercase tracking-[0.2em]">Payment Screenshot</label>
-                                <input type="file" name="payment_ss" accept="image/*" class="block w-full text-sm text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:font-black file:bg-green-500 cursor-pointer">
-                            </div>
+                            <div id="onlineUploadArea" class="hidden space-y-4"><label class="block text-navratri-gold font-bold text-xs uppercase tracking-[0.2em]">Payment Screenshot</label><input type="file" id="paymentSSFile" name="payment_ss" accept="image/*" class="block w-full text-sm text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:font-black file:bg-green-500 cursor-pointer"></div>
                         </div>
-
-                        <!-- Right Side: Instructions -->
                         <div class="premium-glass p-8 space-y-6">
-                            <!-- Online View -->
-                            <div id="onlineInstruct" class="hidden text-center space-y-6">
-                                <p class="text-green-500 font-black tracking-widest text-xs uppercase">Scan QR & Pay Now</p>
-                                <div class="inline-block p-4 bg-white rounded-3xl">
-                                    <img src="YOUR_QR_CODE_URL" alt="Payment QR" class="w-48 h-48 rounded-xl invert opacity-90 transition hover:opacity-100">
-                                </div>
-                                <p class="text-xs text-gray-500 italic">Please attach screenshot after payment.</p>
-                            </div>
-
-                            <!-- Cash View -->
-                            <div id="cashInstruct" class="space-y-6">
-                                <div class="bg-red-500/10 border border-red-500/20 p-6 rounded-2xl">
-                                    <p class="text-red-500 font-black text-center animate-pulse tracking-wide text-sm mb-2">IMPORTANT NOTICE</p>
-                                    <p class="text-white text-xs font-bold text-center leading-relaxed">
-                                        English: Cash must be paid within 7 days of form submission.<br>
-                                        <span class="font-gu text-sm mt-2 block">ગુજરાતી: ફોર્મ સબમિટ કર્યાના 7 દિવસમાં રોકડ જમા કરાવવી ફરજિયાત છે.</span>
-                                    </p>
-                                </div>
-                                <div class="space-y-4">
-                                    <p class="text-navratri-gold font-black text-xs uppercase tracking-[0.2em] text-center">Collection Centers / કલેક્શન સેન્ટર</p>
-                                    <ul class="grid grid-cols-2 gap-2 text-[10px] font-bold tracking-widest text-gray-500 uppercase">
-                                        <li>1. Main Office</li>
-                                        <li>2. Sector A Point</li>
-                                        <li>3. Plaza Center</li>
-                                        <li>4. Gnati Hall</li>
-                                        <li>5. North Depot</li>
-                                        <li>6. South Depot</li>
-                                        <li>7. Ring Road Point</li>
-                                    </ul>
-                                </div>
-                                <p class="text-[10px] text-gray-600 text-center italic">Provide your FULL NAME and CASH to the collector at any center.</p>
-                            </div>
+                            <div id="onlineInstruct" class="hidden text-center space-y-6"><p class="text-green-500 font-black tracking-widest text-xs uppercase">Scan QR & Pay Now</p><div class="inline-block p-4 bg-white rounded-3xl"><img src="YOUR_QR_CODE_URL" alt="Payment QR" class="w-48 h-48 rounded-xl invert opacity-90"></div></div>
+                            <div id="cashInstruct" class="space-y-6"><div class="bg-red-500/10 border border-red-500/20 p-6 rounded-2xl"><p class="text-red-500 font-black text-center animate-pulse tracking-wide text-sm mb-2">IMPORTANT NOTICE</p><p class="text-white text-xs font-bold text-center leading-relaxed">English: Cash must be paid within 7 days of form submission.<br><span class="font-gu text-sm mt-2 block">ગુજરાતી: ફોર્મ સબમિટ કર્યાના 7 દિવસમાં રોકડ જમા કરાવવી ફરજિયાત છે.</span></p></div><div class="space-y-4"><p class="text-navratri-gold font-black text-xs uppercase tracking-[0.2em] text-center">Collection Centers / કલેક્શન સેન્ટર</p><ul class="grid grid-cols-2 gap-2 text-[10px] font-bold tracking-widest text-gray-500 uppercase"><li>1. Main Office</li><li>2. Sector A Point</li><li>3. Plaza Center</li><li>4. Gnati Hall</li><li>5. North Depot</li><li>6. South Depot</li><li>7. Ring Road Point</li></ul></div></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="pt-12 text-center space-y-8">
-                    <button type="submit" class="w-full btn-submit py-8 rounded-[30px] text-4xl italic tracking-tighter uppercase border-b-8 border-navratri-navy/20">
-                        Secure My Digital Pass Now
-                    </button>
+                    <button type="submit" id="submitBtn" class="w-full btn-submit py-8 rounded-[30px] text-4xl italic tracking-tighter uppercase border-b-8 border-navratri-navy/20">Secure My Digital Pass Now</button>
                     <p class="text-gray-600 text-[10px] font-black tracking-[0.5em] uppercase">© 2026 Shree Gurjar Suthar Gnati. All rights reserved.</p>
                 </div>
             </form>
         </div>
     </main>
 
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-navratri-navy/95 z-[9999] hidden flex items-center justify-center p-6">
+        <div class="max-w-xl w-full festive-card p-12 text-center animate-zoom-in">
+            <span class="text-7xl mb-6 block">✨</span>
+            <h2 class="text-4xl font-serif italic font-black text-navratri-gold mb-4">Registration Successful!</h2>
+            <p class="text-gray-400 mb-8 leading-relaxed">તમારી વિગતો સફળતાપૂર્વક સાચવવામાં આવી છે. Verification પછી તમને WhatsApp પર Pass Number મળશે.</p>
+            <a href="index.html" class="btn-premium px-12 py-4 rounded-full inline-block font-black uppercase text-xs tracking-widest">Back to Home</a>
+        </div>
+    </div>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ once: true, duration: 1000 });
-
-        const prices = {
-            male: 1500,
-            female: 1000,
-            kid: 1000,
-            special: 500
-        };
-
+        const GOOGLE_URL = "https://script.google.com/macros/s/AKfycbxjN-W64ClazBw1-Xg8Hh9xRZblU0s1_fZd3PSu98E_gAoJ5Ae-4ze3HONVFhujhBZc/exec";
+        const prices = { male: 1500, female: 1000, kid: 1000, special: 500 };
         let selectedBasePrice = 0;
+        let finalTotalAmount = 0;
 
         function updateLogic(cat) {
-            // Update Base Price
             selectedBasePrice = prices[cat];
-            
-            // Toggle Kid UI
-            const kidArea = document.getElementById('kidGenderArea');
-            kidArea.classList.toggle('hidden', cat !== 'kid');
-            const kidInputs = kidArea.querySelectorAll('input');
-            kidInputs.forEach(i => i.required = (cat === 'kid'));
-
+            document.getElementById('kidGenderArea').classList.toggle('hidden', cat !== 'kid');
             updateFare();
         }
 
         function updateFare() {
             const isSpecial = document.getElementById('specialNumCheck').checked;
-            const specialInputs = document.getElementById('specialNumberInputs');
-            specialInputs.classList.toggle('hidden', !isSpecial);
-            
-            const total = selectedBasePrice + (isSpecial ? prices.special : 0);
-            
-            // Update Display
-            document.getElementById('totalDisplay').innerText = `₹${total}`;
-            
-            // Build Breakdown
-            let breakdown = '';
-            if (selectedBasePrice > 0) {
-                breakdown = `${selectedBasePrice}`;
-                if (isSpecial) breakdown += ` + ${prices.special} (Special Num)`;
-                breakdown += ` = Total ₹${total}`;
-            } else {
-                breakdown = "Please select a category";
-            }
-            document.getElementById('fareBreakdown').innerText = breakdown;
+            document.getElementById('specialNumberInputs').classList.toggle('hidden', !isSpecial);
+            finalTotalAmount = selectedBasePrice + (isSpecial ? prices.special : 0);
+            document.getElementById('totalDisplay').innerText = `₹${finalTotalAmount}`;
+            document.getElementById('fareBreakdown').innerText = selectedBasePrice > 0 ? `${selectedBasePrice} + ${isSpecial ? prices.special : 0} = ₹${finalTotalAmount}` : "Please select a category";
         }
 
         function togglePaymentSection(mode) {
-            const onlineInstruct = document.getElementById('onlineInstruct');
-            const cashInstruct = document.getElementById('cashInstruct');
-            const onlineUpload = document.getElementById('onlineUploadArea');
-            
             const isOnline = (mode === 'online');
-            
-            onlineInstruct.classList.toggle('hidden', !isOnline);
-            cashInstruct.classList.toggle('hidden', isOnline);
-            onlineUpload.classList.toggle('hidden', !isOnline);
-            
-            const ssInput = onlineUpload.querySelector('input');
-            ssInput.required = isOnline;
+            document.getElementById('onlineInstruct').classList.toggle('hidden', !isOnline);
+            document.getElementById('cashInstruct').classList.toggle('hidden', isOnline);
+            document.getElementById('onlineUploadArea').classList.toggle('hidden', !isOnline);
+            document.getElementById('paymentSSFile').required = isOnline;
         }
+
+        // --- SUBMISSION LOGIC ---
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const loader = document.getElementById('loadingOverlay');
+            
+            try {
+                btn.disabled = true;
+                loader.style.display = 'flex';
+
+                const formData = new FormData(e.target);
+                const payload = Object.fromEntries(formData.entries());
+
+                // 1. Calculate Amount for Sheet
+                const isSpecial = document.getElementById('specialNumCheck').checked;
+                const total = selectedBasePrice + (isSpecial ? prices.special : 0);
+                payload.amount = "₹" + total;
+
+                // 2. Process Files to Base64
+                payload.photo = await toBase64(document.getElementById('photoFile').files[0]);
+                payload.aadhar = await toBase64(document.getElementById('aadharFile').files[0]);
+                if (payload.payment_method === 'Online') {
+                    payload.payment_ss = await toBase64(document.getElementById('paymentSSFile').files[0]);
+                }
+
+                // 2. Extra data formatting
+                payload.total_amount = finalTotalAmount;
+                payload.pass_choices = payload.wants_special_number ? `${payload.pass_choice_1}, ${payload.pass_choice_2}, ${payload.pass_choice_3}` : "-";
+
+                // 3. Post to Google
+                const response = await fetch(GOOGLE_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Apps Script requires no-cors for simple redirects
+                    body: JSON.stringify(payload)
+                });
+
+                // Since "no-cors" doesn't return JSON, we assume success after the wait
+                // For better reliability, we use a timeout or a success modal
+                loader.style.display = 'none';
+                document.getElementById('successModal').classList.remove('hidden');
+                e.target.reset();
+
+            } catch (error) {
+                console.error(error);
+                alert("Submission failed. Please check your connection or contact organizer.\n" + error.message);
+                loader.style.display = 'none';
+                btn.disabled = false;
+            }
+        });
     </script>
 </body>
 </html>

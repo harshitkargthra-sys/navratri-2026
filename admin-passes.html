@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Pass Generator | Navratri 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&family=Outfit:wght@400;800;900&display=swap" rel="stylesheet">
+    <style>
+        @media print {
+            @page { size: A4 portrait; margin: 0; }
+            body { background: white; margin: 0; padding: 0; }
+            .no-print { display: none !important; }
+            .pass-container { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .a4-page { width: 210mm; height: 297mm; overflow: hidden; page-break-after: always; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; }
+        }
+        
+        body { background: #060B13; color: white; font-family: 'Outfit', sans-serif; }
+        .pass-card {
+            width: 100%; height: 100%; border: 1px solid #ddd; position: relative;
+            background: #fff; color: #000; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 15px; border: 2px solid #FFD700;
+        }
+        .scalloped-ring { position: absolute; inset: 10px; border: 4px dashed #FFD700; border-radius: 50%; opacity: 0.1; }
+        .pass-photo { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #D81B60; object-fit: cover; }
+        .pass-number { background: #D81B60; color: white; padding: 4px 15px; border-radius: 20px; font-weight: 900; margin-top: 10px; }
+        
+        /* GUI Styling */
+        .glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; }
+    </style>
+</head>
+<body class="p-4 md:p-10">
+
+    <div class="max-w-4xl mx-auto no-print">
+        <div class="glass-panel p-8 mb-10 text-center">
+            <h1 class="text-4xl font-serif italic font-black text-navratri-gold mb-6">Pass Generation Tool</h1>
+            <p class="text-gray-400 mb-8">Instructions: 1. Publish your Google Sheet as CSV. 2. Paste the CSV URL below. 3. Set Status to "Verified" in your sheet for the people you want to print.</p>
+            
+            <div class="flex gap-4 mb-6">
+                <input type="text" id="csvUrl" placeholder="Paste Google Sheet CSV URL here..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-6 py-4 outline-none focus:border-navratri-orange transition">
+                <button onclick="fetchPasses()" class="bg-navratri-orange hover:bg-white hover:text-navy px-10 py-4 rounded-xl font-black uppercase transition">Load Data</button>
+            </div>
+            
+            <div class="flex justify-center gap-6 text-sm text-gray-500 font-bold uppercase tracking-widest">
+                <div id="stats">Total Loaded: 0 | Verified: 0</div>
+            </div>
+        </div>
+        
+        <div class="text-center mb-10">
+            <button onclick="window.print()" class="bg-green-600 hover:bg-green-500 text-white px-20 py-6 rounded-2xl text-xl font-black shadow-2xl transition transform hover:scale-105">
+                🖨️ PRINT PASSES (A4)
+            </button>
+        </div>
+    </div>
+
+    <!-- PRINT AREA -->
+    <div id="printArea" class="flex flex-col items-center gap-4">
+        <!-- A4 Pages will be injected here -->
+        <p class="no-print text-gray-600 italic">No data loaded yet. Please paste your CSV link and click 'Load Data'.</p>
+    </div>
+
+    <script>
+        function getDriveThumbnail(url) {
+            if (!url || !url.includes('id=')) return "https://placehold.co/200x200?text=No+Photo";
+            const id = url.split('id=')[1];
+            return `https://drive.google.com/thumbnail?id=${id}&sz=w400`;
+        }
+
+        async function fetchPasses() {
+            const url = document.getElementById('csvUrl').value;
+            if (!url) return alert("Please paste the CSV URL");
+
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const rows = text.split('\n').map(row => row.split(','));
+                
+                // Remove header row
+                const headers = rows[0];
+                const dataRows = rows.slice(1);
+
+                // Find indices for Status and other fields
+                const statusIdx = headers.indexOf('Status');
+                const nameIdx = headers.indexOf('Name');
+                const catIdx = headers.indexOf('Category');
+                const passNumIdx = headers.indexOf('Pass No');
+                const photoIdx = headers.indexOf('Photo');
+
+                const verifiedData = dataRows.filter(r => r[statusIdx] && r[statusIdx].trim() === 'Verified');
+                
+                document.getElementById('stats').innerText = `Total Loaded: ${dataRows.length} | Verified: ${verifiedData.length}`;
+                
+                renderPasses(verifiedData, nameIdx, catIdx, passNumIdx, photoIdx);
+
+            } catch (err) {
+                console.error(err);
+                alert("Error fetching data. Ensure the Google Sheet is 'Published to the Web' as CSV.");
+            }
+        }
+
+        function renderPasses(data, nameIdx, catIdx, passNumIdx, photoIdx) {
+            const printArea = document.getElementById('printArea');
+            printArea.innerHTML = '';
+            
+            const passesPerPage = 6;
+            for (let i = 0; i < data.length; i += passesPerPage) {
+                const page = document.createElement('div');
+                page.className = 'a4-page';
+                
+                const currentBatch = data.slice(i, i + passesPerPage);
+                currentBatch.forEach(player => {
+                    const card = `
+                        <div class="pass-card">
+                            <div class="scalloped-ring"></div>
+                            <h4 style="font-size: 10px; font-weight: 900; color: #FA7F22; letter-spacing: 2px; margin-bottom: 5px;">શ્રી વિશ્વકર્મા રાસોત્સવ ૨૦૨૬</h4>
+                            <img src="${getDriveThumbnail(player[photoIdx])}" class="pass-photo">
+                            <h2 style="font-size: 16px; font-weight: 800; margin-top: 10px;">${player[nameIdx]}</h2>
+                            <p style="font-size: 10px; color: #555; font-weight: 700;">${player[catIdx].toUpperCase()}</p>
+                            <div class="pass-number">NO: ${player[passNumIdx] || '---'}</div>
+                        </div>
+                    `;
+                    page.innerHTML += card;
+                });
+                
+                // Add empty cards to fill the A4 grid if needed
+                while (page.children.length < 6) {
+                    page.innerHTML += '<div class="pass-card" style="border: 1px dashed #eee;"><p style="color: #ccc; font-size: 10px;">End of Batch</p></div>';
+                }
+                
+                printArea.appendChild(page);
+            }
+        }
+    </script>
+</body>
+</html>
