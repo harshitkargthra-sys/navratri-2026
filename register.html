@@ -304,12 +304,24 @@
             document.getElementById('paymentSSFile').required = isOnline;
         }
 
-        // --- SUBMISSION LOGIC ---
-        const toBase64 = file => new Promise((resolve, reject) => {
+        // --- IMAGE COMPRESSION LOGIC ---
+        const compressImage = (file) => new Promise((resolve) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = error => reject(error);
+            reader.onload = (event) => {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 1000;
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    resolve(canvas.toDataURL('image/jpeg', 0.7)); // 70% quality JPEG
+                };
+            };
         });
 
         document.getElementById('registrationForm').addEventListener('submit', async (e) => {
@@ -329,11 +341,11 @@
                 const total = selectedBasePrice + (isSpecial ? prices.special : 0);
                 payload.amount = "₹" + total;
 
-                // 2. Process Files to Base64
-                payload.photo = await toBase64(document.getElementById('photoFile').files[0]);
-                payload.aadhar = await toBase64(document.getElementById('aadharFile').files[0]);
+                // 2. Process & Compress Files
+                payload.photo = await compressImage(document.getElementById('photoFile').files[0]);
+                payload.aadhar = await compressImage(document.getElementById('aadharFile').files[0]);
                 if (payload.payment_method === 'Online') {
-                    payload.payment_ss = await toBase64(document.getElementById('paymentSSFile').files[0]);
+                    payload.payment_ss = await compressImage(document.getElementById('paymentSSFile').files[0]);
                 }
 
                 // 2. Extra data formatting
