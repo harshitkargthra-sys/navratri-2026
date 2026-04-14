@@ -63,51 +63,99 @@
     <script>
         function getDriveThumbnail(url) {
             if (!url || !url.includes('id=')) return "https://placehold.co/200x200?text=No+Photo";
-            const id = url.split('id=')[1];
+            const id = url.split('id=')[1].split('&')[0];
             return `https://drive.google.com/thumbnail?id=${id}&sz=w400`;
         }
 
+        // Robust CSV Parser (handles commas inside quotes)
+        function parseCSV(text) {
+            const rows = [];
+            const lines = text.split(/\r?\n/);
+            lines.forEach(line => {
+                if (!line.trim()) return;
+                const row = [];
+                let current = '';
+                let inQuotes = false;
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        row.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                row.push(current.trim());
+                rows.push(row.map(r => r.replace(/^"|"$/g, '').trim()));
+            });
+            return rows;
+        }
+
         async function fetchPasses() {
-            const url = document.getElementById('csvUrl').value;
+            let url = document.getElementById('csvUrl').value.trim();
             if (!url) return alert("Please paste the CSV URL");
 
+            // Auto-convert standard sheet URL to CSV export URL
+            if (url.includes('docs.google.com/spreadsheets/d/')) {
+                const idMatch = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+                if (idMatch) {
+                    url = `https://docs.google.com/spreadsheets/d/${idMatch[1]}/export?format=csv&id=${idMatch[1]}`;
+                }
+            }
+
             try {
+                document.getElementById('stats').innerText = "Loading data...";
                 const response = await fetch(url);
-                const text = await response.text();
-                const rows = text.split('\n').map(row => row.split(','));
+                if (!response.ok) throw new Error(`Status: ${response.status}. Make sure the sheet is shared or published.`);
                 
-                // Remove header row
+                const text = await response.text();
+                const rows = parseCSV(text);
+                
+                if (rows.length < 1) throw new Error("The sheet seems empty.");
+
                 const headers = rows[0];
                 const dataRows = rows.slice(1);
 
-                // Find indices for Status and other fields
-                const statusIdx = headers.indexOf('Status');
-                const nameIdx = headers.indexOf('Name');
-                const catIdx = headers.indexOf('Category');
-                const passNumIdx = headers.indexOf('Pass No');
-                const photoIdx = headers.indexOf('Photo');
+                // Helper to find column index regardless of case
+                const findIdx = (val) => headers.findIndex(h => h.toLowerCase().includes(val.toLowerCase()));
+                
+                const statusIdx = findIdx('Status');
+                const nameIdx = findIdx('Name');
+                const catIdx = findIdx('Category');
+                const passNumIdx = findIdx('Pass No');
+                const photoIdx = findIdx('Photo');
 
-                const verifiedData = dataRows.filter(r => r[statusIdx] && r[statusIdx].trim() === 'Verified');
+                if (nameIdx === -1) throw new Error("Column 'Name' not found. Check your sheet headers.");
+
+                const verifiedData = dataRows.filter(r => {
+                    const s = r[statusIdx] ? r[statusIdx].toLowerCase() : "";
+                    return s === 'verified' || s === 'done';
+                });
                 
-                document.getElementById('stats').innerText = `Total Loaded: ${dataRows.length} | Verified: ${verifiedData.length}`;
+                document.getElementById('stats').innerText = `Total: ${dataRows.length} | Verified: ${verifiedData.length}`;
                 
+                if (verifiedData.length === 0) {
+                    alert("No 'Verified' entries found. Type 'Verified' in the Status column for the people you want to print.");
+                }
+
                 renderPasses(verifiedData, nameIdx, catIdx, passNumIdx, photoIdx);
 
             } catch (err) {
                 console.error(err);
-                alert("Error fetching data. Ensure the Google Sheet is 'Published to the Web' as CSV.");
+                alert("FETCH ERROR: " + err.message + "\n\nTIP: Open your Google Sheet, click 'Share', and ensure 'Anyone with the link' can View.");
+                document.getElementById('stats').innerText = "Load failed.";
             }
         }
 
         function renderPasses(data, nameIdx, catIdx, passNumIdx, photoIdx) {
             const printArea = document.getElementById('printArea');
             printArea.innerHTML = '';
-            
             const passesPerPage = 6;
             for (let i = 0; i < data.length; i += passesPerPage) {
                 const page = document.createElement('div');
                 page.className = 'a4-page';
-                
                 const currentBatch = data.slice(i, i + passesPerPage);
                 currentBatch.forEach(player => {
                     const card = `
@@ -115,19 +163,16 @@
                             <div class="scalloped-ring"></div>
                             <h4 style="font-size: 10px; font-weight: 900; color: #FA7F22; letter-spacing: 2px; margin-bottom: 5px;">શ્રી વિશ્વકર્મા રાસોત્સવ ૨૦૨૬</h4>
                             <img src="${getDriveThumbnail(player[photoIdx])}" class="pass-photo">
-                            <h2 style="font-size: 16px; font-weight: 800; margin-top: 10px;">${player[nameIdx]}</h2>
-                            <p style="font-size: 10px; color: #555; font-weight: 700;">${player[catIdx].toUpperCase()}</p>
+                            <h2 style="font-size: 16px; font-weight: 800; margin-top: 10px; color: #000;">${player[nameIdx]}</h2>
+                            <p style="font-size: 10px; color: #555; font-weight: 700;">${(player[catIdx] || '').toUpperCase()}</p>
                             <div class="pass-number">NO: ${player[passNumIdx] || '---'}</div>
                         </div>
                     `;
                     page.innerHTML += card;
                 });
-                
-                // Add empty cards to fill the A4 grid if needed
                 while (page.children.length < 6) {
-                    page.innerHTML += '<div class="pass-card" style="border: 1px dashed #eee;"><p style="color: #ccc; font-size: 10px;">End of Batch</p></div>';
+                    page.innerHTML += '<div class="pass-card" style="border: 1px dashed #eee; opacity: 0.1;"><p style="color: #ccc; font-size: 10px;">Blank</p></div>';
                 }
-                
                 printArea.appendChild(page);
             }
         }
