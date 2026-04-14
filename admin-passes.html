@@ -19,44 +19,56 @@
         
         .pass-card {
             width: 100%; height: 100%; position: relative;
-            background: #7E124B; /* Deep Magenta */
+            background-image: url('navratri_pass_master_template_1776148899318.png');
+            background-size: cover;
+            background-position: center;
             color: #fff; overflow: hidden;
-            display: flex; flex-direction: column;
-            border: 4px solid #FFD700;
-            padding: 10px;
-            box-sizing: border-box;
-            background-image: url('ornamental_navratri_border_1776148022158.png');
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
+            border: 1px solid #ddd;
         }
 
-        .pass-header { display: flex; justify-content: space-between; align-items: start; width: 100%; margin-bottom: 5px; }
-        .pass-title-group { text-align: center; flex: 1; }
+        .pass-header-text { 
+            position: absolute; top: 12px; left: 0; width: 100%; text-align: center;
+            font-size: 11px; font-weight: 900; color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
         .pass-main-title { 
-            font-size: 14px; color: #FFD700; font-weight: 900; 
+            position: absolute; top: 38px; left: 0; width: 100%; text-align: center;
+            font-size: 16px; color: #FFD700; font-weight: 900; 
             text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
-            line-height: 1.2;
         }
         
-        .pass-details-row { font-size: 8px; font-weight: 700; color: #FFF200; text-align: center; margin: 5px 0; }
-        
-        .pass-body { display: flex; gap: 8px; flex: 1; min-height: 0; margin-top: 5px; }
-        .photo-box { width: 45%; height: 110px; border: 2px solid #fff; border-radius: 8px; overflow: hidden; background: #fff; }
-        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .info-box { flex: 1; border: 2px solid #fff; border-radius: 8px; background: #fff; opacity: 0.95; padding: 5px; position: relative; }
-        
-        .season-label { 
-            background: #D81B60; color: white; font-size: 10px; font-weight: 900; 
-            width: 100%; text-align: center; padding: 2px 0; margin-top: 5px; border-radius: 4px;
+        .pass-details { 
+            position: absolute; top: 78px; left: 0; width: 100%; text-align: center;
+            font-size: 8px; font-weight: 800; color: #FFF200;
         }
         
-        .name-footer { 
-            background: #fff; color: #000; width: 100%; padding: 4px 10px; margin-top: 8px; border-radius: 6px; 
-            font-size: 10px; font-weight: 800; display: flex; gap: 10px;
+        .photo-container { 
+            position: absolute; top: 138px; left: 25px; width: 105px; height: 145px;
+            background: #fff; border-radius: 4px; overflow: hidden;
+        }
+        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .info-container { 
+            position: absolute; top: 138px; left: 140px; width: 230px; height: 145px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        
+        .season-pass-label { 
+            position: absolute; top: 108px; left: 0; width: 100%; text-align: center;
+            font-size: 14px; font-weight: 900; color: #fff;
         }
 
-        .pass-no-badge { position: absolute; top: 0; right: 0; background: #FFD700; color: #000; font-size: 8px; padding: 2px 6px; font-weight: 900; border-radius: 0 0 0 8px; }
+        .footer-name { 
+            position: absolute; bottom: 18px; left: 35px; width: 320px;
+            color: #D81B60; font-size: 14px; font-weight: 900; text-align: center;
+        }
+
+        .pass-no-badge { 
+            position: absolute; top: 145px; right: 25px; 
+            background: #D81B60; color: white; padding: 2px 10px; border-radius: 4px;
+            font-size: 10px; font-weight: 900;
+        }
 
         /* GUI Styling */
         .glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; }
@@ -192,38 +204,26 @@
                 currentBatch.forEach(player => {
                     const card = `
                         <div class="pass-card">
-                            <div class="pass-header">
-                                <span style="font-size: 8px;">ॐ</span>
-                                <div class="pass-title-group">
-                                    <h4 style="font-size: 7px; color: #fff; margin-bottom: 2px;">શ્રી ગુર્જર સુથાર જ્ઞાતિ-રાજકોટ</h4>
-                                    <h2 class="pass-main-title">શ્રી વિશ્વકર્મા રાસોત્સવ-૨૦૨૬</h2>
-                                </div>
-                                <span style="font-size: 8px;">🚩</span>
-                            </div>
-
-                            <p class="pass-details-row">તા. ૨૨-૦૯-૨૦૨૬ થી તા. ૦૧-૧૦-૨૦૨૬ | રાત્રે ૭.૩૦ થી ૧૧.૩૦</p>
-                            <p style="font-size: 6px; text-align: center; color: #FFF200; margin-bottom: 5px;">પી.ડી. માલવીયા કોલેજ સામેનું ગ્રાઉન્ડ, ગોંડલ રોડ, રાજકોટ.</p>
+                            <div class="pass-header-text">શ્રી ગુર્જર સુથાર જ્ઞાતિ-રાજકોટ</div>
+                            <h2 class="pass-main-title">શ્રી વિશ્વકર્મા રાસોત્સવ-૨૦૨૬</h2>
+                            <div class="pass-details">તા. ૨૨-૦૯-૨૦૨૬ થી તા. ૦૧-૧૦-૨૦૨૬ | રાત્રે ૭.૩૦ થી ૧૧.૩૦<br>પી.ડી. માલવીયા કોલેજ સામેનું ગ્રાઉન્ડ, રાજકોટ.</div>
                             
-                            <div class="season-label">સીઝન પાસ</div>
+                            <div class="season-pass-label">સીઝન પાસ</div>
 
-                            <div class="pass-body">
-                                <div class="photo-box">
-                                    <img src="${getDriveThumbnail(player[photoIdx])}">
-                                </div>
-                                <div class="info-box">
-                                    <div class="pass-no-badge">NO: ${player[passNumIdx] || '---'}</div>
-                                    <div style="font-size: 8px; color: #000; font-weight: 900; margin-top: 10px;">CATEGORY:</div>
-                                    <div style="font-size: 14px; color: #D81B60; font-weight: 900;">${(player[catIdx] || '').toUpperCase()}</div>
-                                    <div style="font-size: 7px; color: #555; margin-top: 10px; line-height: 1.2;">
-                                        Present this pass at entry.<br>Subject to ground rules.<br>Non-transferable.
-                                    </div>
+                            <div class="photo-container">
+                                <img src="${getDriveThumbnail(player[photoIdx])}">
+                            </div>
+
+                            <div class="info-container">
+                                <span style="font-size: 10px; color: #000; font-weight: 900; opacity: 0.7;">CATEGORY:</span>
+                                <span style="font-size: 24px; color: #D81B60; font-weight: 900; line-height: 1;">${(player[catIdx] || '').toUpperCase()}</span>
+                                <div class="pass-no-badge">PASS NO: ${player[passNumIdx] || '---'}</div>
+                                <div style="font-size: 8px; color: #666; font-weight: 700; margin-top: 15px; text-align: center; line-height: 1.2;">
+                                    Verify signature at gate.<br>Rules apply. Non-transferable.
                                 </div>
                             </div>
 
-                            <div class="name-footer">
-                                <span>નામ :</span>
-                                <span style="color: #D81B60;">${player[nameIdx]}</span>
-                            </div>
+                            <div class="footer-name">${player[nameIdx]}</div>
                         </div>
                     `;
                     page.innerHTML += card;
