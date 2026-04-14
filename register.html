@@ -352,18 +352,22 @@
                 payload.total_amount = finalTotalAmount;
                 payload.pass_choices = payload.wants_special_number ? `${payload.pass_choice_1}, ${payload.pass_choice_2}, ${payload.pass_choice_3}` : "-";
 
-                // 3. Post to Google
+                // 3. Post to Google (using text/plain to avoid CORS pre-flight)
                 const response = await fetch(GOOGLE_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // Apps Script requires no-cors for simple redirects
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(payload)
                 });
 
-                // Since "no-cors" doesn't return JSON, we assume success after the wait
-                // For better reliability, we use a timeout or a success modal
-                loader.style.display = 'none';
-                document.getElementById('successModal').classList.remove('hidden');
-                e.target.reset();
+                const result = await response.json();
+                
+                if (result.result === "success") {
+                    loader.style.display = 'none';
+                    document.getElementById('successModal').classList.remove('hidden');
+                    e.target.reset();
+                } else {
+                    throw new Error(result.error || "Server error");
+                }
 
             } catch (error) {
                 console.error(error);
